@@ -1,5 +1,5 @@
-
-
+const jwt = require("jsonwebtoken")
+const authorModel = require("../models/authorModel")
 const blogModel = require("../models/blogModel")
 const BlogModel = require ("../models/blogModel")
 
@@ -36,7 +36,7 @@ res.status(200).send({status:true,data:updatedBlog})
 }
 }
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 const deleteBlogs = async function(req, res){
     let id = req.params.blogId
     let allBlogs = await BlogModel.findOneAndUpdate({_id : id, isDeleted : false}, {$set: {isDeleted : true}},{new : true})
@@ -44,8 +44,8 @@ const deleteBlogs = async function(req, res){
     else res.status(404).send({status: false, msg : " "})
 }
 
-Delete blog documents by category, authorid, tag name, subcategory name, unpublished
-If the blog document doesn't exist then return an HTTP status of 404 with a body like
+// Delete blog documents by category, authorid, tag name, subcategory name, unpublished
+// If the blog document doesn't exist then return an HTTP status of 404 with a body like
 
 const deleteBlogsByFields = async function(req, res){
     let data = req.query
@@ -61,12 +61,12 @@ const deleteBlogsByFields = async function(req, res){
 module.exports.deleteBlogsByFields = deleteBlogsByFields
 module.exports.deleteBlogs = deleteBlogs
 module.exports.createBlog = createBlog
-=======
-<<<<<<< HEAD
+// =======
+// <<<<<<< HEAD
 
    module.exports.createBlog = createBlog
    module.exports.updateBlogs=updateBlogs
-=======
+// =======
 const getBlog = async function (req, res) {
     let data = req.query
     let authorId = data.authorId
@@ -87,7 +87,39 @@ const getBlog = async function (req, res) {
 
 
 }
+//Add authentication and authroisation feature
+// POST /login
+
+// Allow an author to login with their email and password. On a successful login attempt return a JWT token contatining the authorId
+// If the credentials are incorrect return a suitable error message with a valid HTTP status code
+// Authentication
+
+// Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
+// Protected routes are create a blog, edit a blog, get the list of blogs, delete a blog(s)
+// Set the token, once validated, in the request - x-api-key
+// Use a middleware for authentication purpose.
+// Authorisation
+
+// Make sure that only the owner of the blogs is able to edit or delete the blog.
+// In case of unauthorized access return an appropirate error message.
+const loginAuthor = async function(req, res){
+    let email = req.body.email
+    let password = req.body.password
+    let valid = await authorModel.findOne({email : email, password : password})
+    if(!valid){
+        return res.status(404).send({status : false, msg : "username or password is wrong"})
+    }
+    let token = jwt.sign({
+        userId : valid._id.toString(),
+        group : 25,
+        batch : "uranium"
+    }, "group-25")
+    res.setHeader("x-api-key" , token)
+    res.status(200).send({status: true , data : token})
+}
+
+module.exports.loginAuthor = loginAuthor
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
->>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
->>>>>>> f0948a7374c129f67c90453f1fc56855abc72666
+// >>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
+// >>>>>>> f0948a7374c129f67c90453f1fc56855abc72666
