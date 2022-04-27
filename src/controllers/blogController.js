@@ -11,8 +11,7 @@ const createBlog= async function (req, res) {                                   
      }
 
 catch (error){
-    console.log(error)
-    res.status(400).send({ status: false, msg: "connection failed"})
+    res.status(400).send({ status: false, msg: error.message})
 }
 }
 
