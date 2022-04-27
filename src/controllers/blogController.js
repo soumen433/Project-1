@@ -10,10 +10,10 @@ const createBlog= async function (req, res) {                                   
     res.status(201).send({ status: true, data: savedData})
      }
 
-catch (error){
+catch (error) {
     console.log(error)
     res.status(400).send({ status: false, msg: "connection failed"})
-}
+  }
 }
 
    module.exports.createBlog = createBlog
