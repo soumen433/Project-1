@@ -36,7 +36,8 @@ res.status(200).send({status:true,data:updatedBlog})
 }
 }
 
-<<<<<<< HEAD
+
+
 const deleteBlogs = async function(req, res){
     let id = req.params.blogId
     let allBlogs = await BlogModel.findOneAndUpdate({_id : id, isDeleted : false}, {$set: {isDeleted : true}},{new : true})
@@ -61,12 +62,8 @@ const deleteBlogsByFields = async function(req, res){
 module.exports.deleteBlogsByFields = deleteBlogsByFields
 module.exports.deleteBlogs = deleteBlogs
 module.exports.createBlog = createBlog
-=======
-<<<<<<< HEAD
 
-   module.exports.createBlog = createBlog
-   module.exports.updateBlogs=updateBlogs
-=======
+
 const getBlog = async function (req, res) {
     let data = req.query
     let authorId = data.authorId
@@ -89,5 +86,5 @@ const getBlog = async function (req, res) {
 }
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
->>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
->>>>>>> f0948a7374c129f67c90453f1fc56855abc72666
+
+6
