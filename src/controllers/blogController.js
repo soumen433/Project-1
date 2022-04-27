@@ -44,8 +44,8 @@ const deleteBlogs = async function(req, res){
     else res.status(404).send({status: false, msg : " "})
 }
 
-Delete blog documents by category, authorid, tag name, subcategory name, unpublished
-If the blog document doesn't exist then return an HTTP status of 404 with a body like
+// Delete blog documents by category, authorid, tag name, subcategory name, unpublished
+// If the blog document doesn't exist then return an HTTP status of 404 with a body like
 
 const deleteBlogsByFields = async function(req, res){
     let data = req.query
