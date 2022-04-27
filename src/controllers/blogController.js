@@ -1,11 +1,8 @@
 
 
 const blogModel = require("../models/blogModel")
-<<<<<<< HEAD
 const BlogModel = require ("../models/blogModel")
-=======
-const BlogModel = require("../models/blogModel")
->>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
+//const BlogModel = require("../models/blogModel")
 
 
 const createBlog = async function (req, res) {                                    // Second API
@@ -23,15 +20,17 @@ const createBlog = async function (req, res) {                                  
 
     
 }
+// PUT API 
  const updateBlogs= async function(req,res){
      try{
      let blogId=req.params.blogId
      
-      let gotblog=await blogModel.findById(blogId)
-     if(!gotblog){ return res.status(404).send("No blogs exist")
+      let gotblog=await blogModel.findById(blogId)//Finding blogId in blogModel
+     // console.log(gotblog)
+     if(!gotblog){ return res.status(404).send("No blogs exist")//check blogId is valid or not
     }
     let detailsToUpdate=req.body
-    let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})
+    let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})//Updating the details are coming from request
 res.status(200).send({status:true,data:updatedBlog})
      }
  catch(err){
@@ -40,11 +39,10 @@ res.status(200).send({status:true,data:updatedBlog})
 }
 }
 
-<<<<<<< HEAD
 
-   module.exports.createBlog = createBlog
-   module.exports.updateBlogs=updateBlogs
-=======
+
+  // module.exports.createBlog = createBlog
+  
 const getBlog = async function (req, res) {
     let data = req.query
     let authorId = data.authorId
@@ -63,8 +61,7 @@ const getBlog = async function (req, res) {
 
 
 
-
 }
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
->>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
+module.exports.updateBlogs=updateBlogs
