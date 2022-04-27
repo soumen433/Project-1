@@ -32,7 +32,7 @@ const getBlog = async function (req, res) {
     }
 
     let filterBlogs = await blogModel.find({ $or: [{ authorId: authorId }, { category: category }, { tags: tags }, { subcategory: subcategory}]})
-    res.send({ msg: filterBlogs })
+    res.status(200).send({ msg: filterBlogs })
 
 
 
