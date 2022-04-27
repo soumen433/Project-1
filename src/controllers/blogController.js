@@ -38,23 +38,31 @@ res.status(200).send({status:true,data:updatedBlog})
 
 // <<<<<<< HEAD
 const deleteBlogs = async function(req, res){
-    let id = req.params.blogId
-    let allBlogs = await BlogModel.findOneAndUpdate({_id : id, isDeleted : false}, {$set: {isDeleted : true}},{new : true})
-    if(allBlogs)res.status(200).send({status : true, msg : allBlogs})
-    else res.status(404).send({status: false, msg : " "})
+    try{
+        let id = req.params.blogId
+        let allBlogs = await BlogModel.findOneAndUpdate({_id : id, isDeleted : false}, {$set: {isDeleted : true}},{new : true})
+        if(allBlogs)res.status(200).send({status : true, msg : allBlogs})
+        else res.status(404).send({status: false, msg : " "})
+    }catch(err){
+        res.status(404).send({status : false, msg : err.message})
+    }
 }
 
 // Delete blog documents by category, authorid, tag name, subcategory name, unpublished
 // If the blog document doesn't exist then return an HTTP status of 404 with a body like
 
 const deleteBlogsByFields = async function(req, res){
-    let data = req.query
-    let any = await BlogModel.find(data)
-    if(Object.keys(any).length !== 0){
-        let all = await BlogModel.updateMany(data , {$set : {isDeleted : true}}, {new : true})
-        res.status(200).send({status : true, msg : all})
+    try{
+        let data = req.query
+        let any = await BlogModel.find(data)
+        if(Object.keys(any).length !== 0){
+            let all = await BlogModel.updateMany(data , {$set : {isDeleted : true}}, {new : true})
+            res.status(200).send({status : true, msg : all})
+        }
+        else res.status(404).send({status : false, msg : ""})
+    }catch(err){
+        res.status(404).send({status : false, msg : err.message})
     }
-    else res.status(404).send({status : false, msg : ""})
     } 
 
 
@@ -95,7 +103,7 @@ const getBlog = async function (req, res) {
 // Authentication
 
 // Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
-// Protected routes are create a blog, edit a blog, get the list of blogs, delete a blog(s)
+// Protected endpoints are create a blog, edit a blog, get the list of blogs, delete a blog(s)
 // Set the token, once validated, in the request - x-api-key
 // Use a middleware for authentication purpose.
 // Authorisation
