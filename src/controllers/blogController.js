@@ -59,7 +59,7 @@ const deleteBlogsByFields = async function(req, res){
 
 
 module.exports.deleteBlogsByFields = deleteBlogsByFields
-// module.exports.deleteBlogs = deleteBlogs
+module.exports.deleteBlogs = deleteBlogs
 module.exports.createBlog = createBlog
 =======
 <<<<<<< HEAD
