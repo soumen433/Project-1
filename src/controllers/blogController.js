@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken")
 const authorModel = require("../models/authorModel")
 const blogModel = require("../models/blogModel")
 const BlogModel = require ("../models/blogModel")
+//const BlogModel = require("../models/blogModel")
 
 
 const createBlog = async function (req, res) {                                    // Second API
@@ -19,15 +20,19 @@ const createBlog = async function (req, res) {                                  
 
     
 }
+// PUT API Updates a blog by changing the its title, body, adding tags, adding a subcategory.
+// (Assuming tag and subcategory received in body is need to be added)
  const updateBlogs= async function(req,res){
      try{
      let blogId=req.params.blogId
-     
-      let gotblog=await blogModel.findById(blogId)
-     if(!gotblog){ return res.status(404).send("No blogs exist")
+     let publishedAt=new Date()
+      let gotblog=await blogModel.findById(blogId)//Finding blogId in blogModel
+     // console.log(gotblog)
+     if(!gotblog){ return res.status(404).send("No blogs exist")//check blogId is valid or not
     }
+    req.body.publishedAt=publishedAt
     let detailsToUpdate=req.body
-    let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})
+    let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})//Updating the details are coming from request
 res.status(200).send({status:true,data:updatedBlog})
      }
  catch(err){
@@ -35,6 +40,7 @@ res.status(200).send({status:true,data:updatedBlog})
      res.status(500).send({msg:err.message})
 }
 }
+
 
 // <<<<<<< HEAD
 const deleteBlogs = async function(req, res){
@@ -67,14 +73,20 @@ const deleteBlogsByFields = async function(req, res){
     } 
 
 
-module.exports.deleteBlogsByFields = deleteBlogsByFields
-module.exports.deleteBlogs = deleteBlogs
-module.exports.createBlog = createBlog
+// module.exports.deleteBlogsByFields = deleteBlogsByFields
+//module.exports.deleteBlogs = deleteBlogs
+//module.exports.createBlog = createBlog
+
+  // module.exports.createBlog = createBlog
+  
+//module.exports.deleteBlogsByFields = deleteBlogsByFields
+//module.exports.deleteBlogs = deleteBlogs
+//module.exports.createBlog = createBlog
 // =======
 // <<<<<<< HEAD
 
-   module.exports.createBlog = createBlog
-   module.exports.updateBlogs=updateBlogs
+  // module.exports.createBlog = createBlog
+ //  module.exports.updateBlogs=updateBlogs
 // =======
 const getBlog = async function (req, res) {
     let data = req.query
@@ -85,13 +97,12 @@ const getBlog = async function (req, res) {
     console.log(data)
     if (Object.keys(data).length === 0) {
         let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false })
-        if (allBlogs.length == 0) return res.status(404).send({ msg: "not found" })
-        return res.status(200).send({ msg: allBlogs })
+        if (allBlogs.length == 0) return res.status(404).send({status:false, msg: "not found" })
+        return res.status(200).send({ status:true,msg: allBlogs })
     }
 
     let filterBlogs = await blogModel.find({ $or: [{ authorId: authorId }, { category: category }, { tags: tags }, { subcategory: subcategory}]})
-    res.status(200).send({ msg: filterBlogs })
-
+    res.status(200).send({status:true, msg: filterBlogs })
 
 
 
@@ -130,5 +141,8 @@ const loginAuthor = async function(req, res){
 module.exports.loginAuthor = loginAuthor
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
+module.exports.updateBlogs=updateBlogs
+module.exports.deleteBlogsByFields = deleteBlogsByFields
+module.exports.deleteBlogs = deleteBlogs
 // >>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
 // >>>>>>> f0948a7374c129f67c90453f1fc56855abc72666
