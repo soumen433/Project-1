@@ -15,7 +15,7 @@ const blogController = require ("../controllers/blogController.js");
 
 // router.post("/blogs/:blogId", blogController.deleteBlogs)
 
-// router.post("/blogs" , blogController.deleteBlogsByFields)
+router.post("/blogs" , blogController.deleteBlogsByFields)
 
 // router.get("/blogs",blogController.getBlog)
 
