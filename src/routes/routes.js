@@ -13,6 +13,7 @@ const blogController = require ("../controllers/blogController.js");
 router.post("/createAuthor", authorsController.createAuthor)
 
 router.post("/createBlog", blogController.createBlog)
+router.put("/blogs/:blogId",blogController.updateBlogs)
 
 
 
