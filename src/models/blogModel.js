@@ -24,11 +24,14 @@ const blogSchema = new mongoose.Schema( {
 
     isPublished: Boolean,
 
-    publishedAt: String,
+    publishedAt:String,
 
-    isDeleted: Boolean,
+    isDeleted:{ 
+        type:Boolean,
+        default:false
+    },
 
-    detetedAt: String, 
+    deletedAt: String, 
     
      
    },
