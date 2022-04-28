@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken")
 const authorModel = require("../models/authorModel")
 const blogModel = require("../models/blogModel")
 const BlogModel = require ("../models/blogModel")
+const moment=require('moment')
 //const BlogModel = require("../models/blogModel")
 
 
@@ -25,7 +26,8 @@ const createBlog = async function (req, res) {                                  
  const updateBlogs= async function(req,res){
      try{
      let blogId=req.params.blogId
-     let publishedAt=new Date()
+     let time=moment()
+     let publishedAt=time.format('YYYY-mm-ddTHH:MM:ssZ')
       let gotblog=await blogModel.findById(blogId)//Finding blogId in blogModel
      // console.log(gotblog)
      if(!gotblog){ return res.status(404).send("No blogs exist")//check blogId is valid or not
@@ -137,6 +139,7 @@ const loginAuthor = async function(req, res){
     res.setHeader("x-api-key" , token)
     res.status(200).send({status: true , data : token})
 }
+
 
 module.exports.loginAuthor = loginAuthor
 module.exports.getBlog = getBlog
