@@ -6,7 +6,7 @@ const authEntication = async function (req, res, next) {
         let header = req.headers;
         let token = header["x-api-key"];
 
-        if (!token) return res.status(401).send({ msg: "Sorry,Header Must Needed" })
+        if (!token) return res.status(400).send({ msg: "Sorry,Header Must Needed" })
         jwt.verify(token, "group-25");
     }
     catch (error) {
@@ -27,7 +27,7 @@ const authorIsation = async function (req, res, next) {
         let authorId = await blogModel.findOne({ _id: blogId }).select({ authorId: 1, _id: 0 })
         let _id = authorId.authorId.toString()
         console.log(authorId)
-        let logId = decodedToken.userId;
+        let logId = decodedToken.authorId;
         console.log(logId)
 
         if (_id != logId) return res.status(401).send({ msg: "Sorry,authorisation required  " });

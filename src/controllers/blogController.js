@@ -51,7 +51,7 @@ const deleteBlogs = async function(req, res){
         let id = req.params.blogId
         let allBlogs = await BlogModel.findOneAndUpdate({_id : id, isDeleted : false}, {$set: {isDeleted : true}},{new : true})
         if(allBlogs)res.status(200).send({status : true, msg : allBlogs})
-        else res.status(404).send({status: false, msg : " "})
+        else res.status(404).send({status: false, msg : "No Blogs Exist"})
     }catch(err){
         res.status(404).send({status : false, msg : err.message})
     }
@@ -69,7 +69,7 @@ const deleteBlogsByFields = async function(req, res){
             let all = await BlogModel.updateMany(data , {$set : {isDeleted : true}}, {new : true})
             res.status(200).send({status : true, msg : all})
         }
-        else res.status(404).send({status : false, msg : ""})
+        else res.status(404).send({status : false, msg : "No Blogs Exist"})
     }catch(err){
         res.status(404).send({status : false, msg : err.message})
     }

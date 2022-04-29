@@ -12,7 +12,7 @@ const middleware=require("../middlewares/auth")
 
 
 router.post("/createAuthor", authorsController.createAuthor)
-router.post("/createBlog", blogController.createBlog)
+router.post("/login", blogController.loginAuthor)
 router.post("/createBlog",middleware.authEntication, blogController.createBlog)
 router.get("/blogs",middleware.authEntication, blogController.getBlog)
 router.delete("/blogs" ,middleware.authEntication, blogController.deleteBlogsByFields)
