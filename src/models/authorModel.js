@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 const authorSchema = new mongoose.Schema( {
            
            fname: {type: String, 
-                   required: true},
+                   required: true,
+                   trim: true,
+                   minlength: 3,
+                   maxlength:20},
 
            lname: {type: String, 
-                  required: true }, 
+                  required: true ,
+                   trim: true,
+                  minlength:3,
+                  maxlength: 20}, 
 
            title: {
                type: String,
@@ -17,12 +23,15 @@ const authorSchema = new mongoose.Schema( {
            email: {type:String,
                    unique: true,
                    required: true,
+
+
                    validate: {
                         validator: function(v) {
                           return /^\w+@[a-zA-Z_]+?\.com$/.test(v);
                         },
                         message: data => `${data.value} is not a valid email!`
                       }},
+
 
            password: {type: String,
                      required: true},

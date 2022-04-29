@@ -6,7 +6,7 @@ const moment=require('moment')
 //const BlogModel = require("../models/blogModel")
 
 
-const createBlog = async function (req, res) {                                    // Second API
+const createBlog = async function (req, res) {                                    
 
     try {
         let data = req.body
@@ -19,10 +19,11 @@ const createBlog = async function (req, res) {                                  
         res.status(400).send({ status: false, msg: "connection failed" })
     }
 
-    
 }
+
 // PUT API Updates a blog by changing the its title, body, adding tags, adding a subcategory.
 // (Assuming tag and subcategory received in body is need to be added)
+
  const updateBlogs= async function(req,res){
      try{
      let blogId=req.params.blogId
@@ -37,14 +38,16 @@ const createBlog = async function (req, res) {                                  
     let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})//Updating the details are coming from request
 res.status(200).send({status:true,data:updatedBlog})
      }
- catch(err){
+
+catch(err){
      console.log(err)
      res.status(500).send({msg:err.message})
 }
-}
+
+ }
 
 
-// <<<<<<< HEAD
+
 const deleteBlogs = async function(req, res){
     try{
         let id = req.params.blogId
@@ -75,21 +78,7 @@ const deleteBlogsByFields = async function(req, res){
     } 
 
 
-// module.exports.deleteBlogsByFields = deleteBlogsByFields
-//module.exports.deleteBlogs = deleteBlogs
-//module.exports.createBlog = createBlog
 
-  // module.exports.createBlog = createBlog
-  
-//module.exports.deleteBlogsByFields = deleteBlogsByFields
-//module.exports.deleteBlogs = deleteBlogs
-//module.exports.createBlog = createBlog
-// =======
-// <<<<<<< HEAD
-
-  // module.exports.createBlog = createBlog
- //  module.exports.updateBlogs=updateBlogs
-// =======
 const getBlog = async function (req, res) {
     let data = req.query
     let authorId = data.authorId
@@ -106,24 +95,9 @@ const getBlog = async function (req, res) {
     let filterBlogs = await blogModel.find({ $or: [{ authorId: authorId }, { category: category }, { tags: tags }, { subcategory: subcategory}]})
     res.status(200).send({status:true, msg: filterBlogs })
 
-
-
 }
-//Add authentication and authroisation feature
-// POST /login
 
-// Allow an author to login with their email and password. On a successful login attempt return a JWT token contatining the authorId
-// If the credentials are incorrect return a suitable error message with a valid HTTP status code
-// Authentication
 
-// Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
-// Protected endpoints are create a blog, edit a blog, get the list of blogs, delete a blog(s)
-// Set the token, once validated, in the request - x-api-key
-// Use a middleware for authentication purpose.
-// Authorisation
-
-// Make sure that only the owner of the blogs is able to edit or delete the blog.
-// In case of unauthorized access return an appropirate error message.
 const loginAuthor = async function(req, res){
     let email = req.body.email
     let password = req.body.password
@@ -141,11 +115,15 @@ const loginAuthor = async function(req, res){
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d79f243fbf8acadc4e0ece25104b8159d1b3d720
 module.exports.loginAuthor = loginAuthor
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
-module.exports.updateBlogs=updateBlogs
 module.exports.deleteBlogsByFields = deleteBlogsByFields
+module.exports.updateBlogs=updateBlogs
 module.exports.deleteBlogs = deleteBlogs
-// >>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
-// >>>>>>> f0948a7374c129f67c90453f1fc56855abc72666
+
