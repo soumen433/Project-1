@@ -10,6 +10,7 @@ const authEntication = async function (req, res, next) {
         jwt.verify(token, "group-25");
     }
     catch (error) {
+        
         return res.status(407).send({ msg: error.message })
     }
 
@@ -26,11 +27,9 @@ const authorIsation = async function (req, res, next) {
         let blogId = req.params.blogId;
         let authorId = await blogModel.findOne({ _id: blogId }).select({ authorId: 1, _id: 0 })
         let _id = authorId.authorId.toString()
-        console.log(authorId)
+        
         let logId = decodedToken.authorId;
-        console.log(logId)
-
-        if (_id != logId) return res.status(401).send({ msg: "Sorry,authorisation required  " });
+         if (_id != logId) return res.status(401).send({ msg: "Sorry,authorisation required  " });
 
 
     }

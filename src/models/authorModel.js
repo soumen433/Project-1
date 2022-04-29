@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 const authorSchema = new mongoose.Schema( {
            
-           fname: {type: String, 
+           fname: 
+                 {type: String, 
                    required: true,
                    trim: true,
                    minlength: 3,
@@ -23,14 +24,15 @@ const authorSchema = new mongoose.Schema( {
            email: {type:String,
                    unique: true,
                    required: true,
+                  match: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
+                },
 
-
-                   validate: {
-                        validator: function(v) {
-                          return /^\w+@[a-zA-Z_]+?\.com$/.test(v);
-                        },
-                        message: data => `${data.value} is not a valid email!`
-                      }},
+                  //  validate: {
+                  //       validator: function(v) {
+                  //         return /^\w+@[a-zA-Z_]+?\.com$/.test(v);
+                  //       },
+                  //       message: data => `${data.value} is not a valid email!`
+                  //     }},
 
 
            password: {type: String,
