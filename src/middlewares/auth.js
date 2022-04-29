@@ -1,18 +1,20 @@
-const jwt = require("jsonwebtoken")
-const authorModel = require("../models/authorModel")
 
+const jwt = require("jsonwebtoken");
+const blogModel = require("../models/blogModel");
 
-//NOTE - middlewares have been imported in the route.js file
-const val = function(req, res, next){
-    try{
-        
-        
-        
-        next()
+const authEntication = async function (req, res, next) {
+    try {
+        let header = req.headers;
+        let token = header["x-api-key"];
+
+        if (!token) return res.status(401).send({ msg: "Sorry,Header Must Needed" })
+        jwt.verify(token, "group-25");
     }
-    catch(error){
-        res.status(404).send({status : false, msg : error.messsage})
+    catch (error) {
+        return res.status(407).send({ msg: error.message })
     }
+
+    next()
 }
 
 const auth = function(req, res, next){
@@ -21,9 +23,11 @@ const auth = function(req, res, next){
         
         next()
     }
-    catch(err){
-        res.status(400).send({status : 400, msg : error.message})
+    catch (error) {
+        return res.status(404).send({ msg: "plz enter valid Blog Id,this Id not found" })
     }
+
+    next()
 }
-module.exports.auth = auth
-module.exports.val = val
+module.exports.authEntication = authEntication
+module.exports.authorIsation = authorIsation
