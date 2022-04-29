@@ -23,16 +23,15 @@ const authorSchema = new mongoose.Schema( {
            email: {type:String,
                    unique: true,
                    required: true,
-<<<<<<< HEAD
-                   match: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/},
-=======
+
+
                    validate: {
                         validator: function(v) {
                           return /^\w+@[a-zA-Z_]+?\.com$/.test(v);
                         },
                         message: data => `${data.value} is not a valid email!`
                       }},
->>>>>>> 85e0f925b171b507a1be89488c848a862df57e02
+
 
            password: {type: String,
                      required: true},

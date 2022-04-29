@@ -2,8 +2,6 @@
 
 const AuthorModel= require("../models/authorModel")
 
-
-
 const createAuthor= async function (req, res) {   
     
     try {

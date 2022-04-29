@@ -5,7 +5,7 @@ const BlogModel = require ("../models/blogModel")
 //const BlogModel = require("../models/blogModel")
 
 
-const createBlog = async function (req, res) {                                    // Second API
+const createBlog = async function (req, res) {                                    
 
     try {
         let data = req.body
@@ -18,10 +18,11 @@ const createBlog = async function (req, res) {                                  
         res.status(400).send({ status: false, msg: "connection failed" })
     }
 
-    
 }
+
 // PUT API Updates a blog by changing the its title, body, adding tags, adding a subcategory.
 // (Assuming tag and subcategory received in body is need to be added)
+
  const updateBlogs= async function(req,res){
      try{
      let blogId=req.params.blogId
@@ -40,11 +41,11 @@ catch(err){
      console.log(err)
      res.status(500).send({msg:err.message})
 }
-//>>>>>>> 2690179aa1c392d49730072474210a4ca665cffa
+
  }
 
 
-// <<<<<<< HEAD
+
 const deleteBlogs = async function(req, res){
     try{
         let id = req.params.blogId
@@ -75,29 +76,7 @@ const deleteBlogsByFields = async function(req, res){
     } 
 
 
-<<<<<<< HEAD
 
-// =======
-// <<<<<<< HEAD
-
-  
-=======
-// module.exports.deleteBlogsByFields = deleteBlogsByFields
-//module.exports.deleteBlogs = deleteBlogs
-//module.exports.createBlog = createBlog
-
-  // module.exports.createBlog = createBlog
-  
-//module.exports.deleteBlogsByFields = deleteBlogsByFields
-//module.exports.deleteBlogs = deleteBlogs
-//module.exports.createBlog = createBlog
-// =======
-// <<<<<<< HEAD
-
-  // module.exports.createBlog = createBlog
- //  module.exports.updateBlogs=updateBlogs
->>>>>>> 85e0f925b171b507a1be89488c848a862df57e02
-// =======
 const getBlog = async function (req, res) {
     let data = req.query
     let authorId = data.authorId
@@ -114,24 +93,8 @@ const getBlog = async function (req, res) {
     let filterBlogs = await blogModel.find({ $or: [{ authorId: authorId }, { category: category }, { tags: tags }, { subcategory: subcategory}]})
     res.status(200).send({status:true, msg: filterBlogs })
 
-
-
 }
-//Add authentication and authroisation feature
-// POST /login
 
-// Allow an author to login with their email and password. On a successful login attempt return a JWT token contatining the authorId
-// If the credentials are incorrect return a suitable error message with a valid HTTP status code
-// Authentication
-
-// Add an authorisation implementation for the JWT token that validates the token before every protected endpoint is called. If the validation fails, return a suitable error message with a corresponding HTTP status code
-// Protected endpoints are create a blog, edit a blog, get the list of blogs, delete a blog(s)
-// Set the token, once validated, in the request - x-api-key
-// Use a middleware for authentication purpose.
-// Authorisation
-
-// Make sure that only the owner of the blogs is able to edit or delete the blog.
-// In case of unauthorized access return an appropirate error message.
 
 const loginAuthor = async function(req, res){
     let email = req.body.email
@@ -149,18 +112,13 @@ const loginAuthor = async function(req, res){
     res.status(200).send({status: true , data : token})
 }
 
+
+
+
 module.exports.loginAuthor = loginAuthor
 module.exports.getBlog = getBlog
 module.exports.createBlog = createBlog
-<<<<<<< HEAD
 module.exports.deleteBlogsByFields = deleteBlogsByFields
-module.exports.deleteBlogs = deleteBlogs
 module.exports.updateBlogs=updateBlogs
+module.exports.deleteBlogs = deleteBlogs
 
-=======
-module.exports.updateBlogs=updateBlogs
-module.exports.deleteBlogsByFields = deleteBlogsByFields
-module.exports.deleteBlogs = deleteBlogs
->>>>>>> 85e0f925b171b507a1be89488c848a862df57e02
-// >>>>>>> 736dea1bde1ccb696363156b775fe21b4ace43c1
-// >>>>>>> f0948a7374c129f67c90453f1fc56855abc72666  
