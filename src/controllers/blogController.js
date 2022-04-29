@@ -106,7 +106,7 @@ const loginAuthor = async function(req, res){
         return res.status(404).send({status : false, msg : "username or password is wrong"})
     }
     let token = jwt.sign({
-        userId : valid._id.toString(),
+        authorId : valid._id.toString(),
         group : 25,
         batch : "uranium"
     }, "group-25")
