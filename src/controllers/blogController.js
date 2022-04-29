@@ -26,27 +26,37 @@ const createBlog = async function (req, res) {
 
  const updateBlogs= async function(req,res){
      try{
-     let blogId=req.params.blogId
-     let time=moment()
-     let publishedAt=time.format('YYYY-mm-ddTHH:MM:ssZ')
+    let time=moment()
+    let publishedAt=time.format('YYYY-mm-ddTHH:MM:ssZ')
+    
+    let isPublished=req.body.isPublished
+    console.log(isPublished)
+     var blogId=req.params.blogId
+     //console.log(blogId)
       let gotblog=await blogModel.findById(blogId)//Finding blogId in blogModel
      // console.log(gotblog)
      if(!gotblog){ return res.status(404).send("No blogs exist")//check blogId is valid or not
     }
-    req.body.publishedAt=publishedAt
+     if(isPublished===true){
+        req.body.publishedAt=publishedAt
     let detailsToUpdate=req.body
-    let updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})//Updating the details are coming from request
+    var updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})//Updating the details are coming from request
 res.status(200).send({status:true,data:updatedBlog})
      }
+     else{
+         req.body.publishedAt =" "
+        detailsToUpdate=req.body
+        var updatedBlog=await blogModel.findOneAndUpdate({_id:blogId},detailsToUpdate,{new:true})
+         res.send({status:false,data:updatedBlog})
+     }
+    }
 
 catch(err){
      console.log(err)
-     res.status(500).send({msg:err.message})
+     res.status(400).send({msg:err.message})
 }
 
  }
-
-
 
 const deleteBlogs = async function(req, res){
     try{
