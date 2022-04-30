@@ -101,7 +101,7 @@ const getBlog = async function (req, res) {
         res.status(200).send({ status: true, msg: filterBlogs })
     }
     catch(error){
-        res.status(400).send({statsus : false, msg : error.message})
+        res.status(400).send({status : false, msg : error.message})
     }
 
 }
