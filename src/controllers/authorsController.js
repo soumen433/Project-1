@@ -1,24 +1,42 @@
 
-
 const AuthorModel = require("../models/authorModel")
+function validateEmail(usremail) {
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(usremail);
+}
 
 const createAuthor = async function (req, res) {
 
     try {
-
         let data = req.body
         if (Object.keys(data).length != 0) {
+            if (!data.fname) return res.status(400).send({ status: false, msg: "plz enter fname" })
+            if (!data.lname) return res.status(400).send({ status: false, msg: "plz enter lname" })
+            if (!data.email) return res.status(400).send({ status: false, msg: "plz enter email" })
+            if (!data.password) return res.status(400).send({ status: false, msg: "plz enter password" })
+            if (!validateEmail(data.email)) return res.status(400).send({ status: false, msg: "plz enter valid email(like-aBcd123@gmail.com)" })
+            let a = await AuthorModel.find({ email: data.email })
+            if (a.length != 0) return res.status(400).send({ status: false, msg: "email already used" })
             let savedData = await AuthorModel.create(data)
             res.status(201).send({ msg: savedData })
         }
 
+<<<<<<< HEAD
         else res.status(400).send({ msg: " Data not Found" })
+=======
+        else res.status(400).send({ mag: " body not Found" })
+>>>>>>> a2170b3b93ffcaf85fba5d3f585d0f6c7796bb12
 
     }
     catch (error) {
-        console.log(" this is error:", error.message)
-        return res.status(500).send({ msg: " Error", error: error.message })
+
+        res.status(500).send({ msg: error.message })
+
+
+
     }
+
+
 }
 
 
