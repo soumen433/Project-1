@@ -1,3 +1,4 @@
+
 const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
 
@@ -6,15 +7,18 @@ const authEntication = async function (req, res, next) {
         let header = req.headers;
         let token = header["x-api-key"]
         if (!token) return res.status(400).send({ msg: "Sorry,Header(token) Must Needed" })
+
         jwt.verify(token, "group-25");
+        next()
     }
     catch (error) {
 
         return res.status(407).send({ msg: error.message })
     }
 
-    next()
+
 }
+
 
 
 const authorIsation = async function (req, res, next) {
@@ -36,6 +40,9 @@ const authorIsation = async function (req, res, next) {
         let logId = decodedToken.authorId;
         if (_id != logId) return res.status(401).send({ msg: "Sorry,authorisation required  " });
 
+
+        next()
+
     }
 
 
@@ -43,7 +50,7 @@ const authorIsation = async function (req, res, next) {
         return res.status(404).send({ msg: "not found" })
     }
 
-    next()
+
 }
 module.exports.authEntication = authEntication
 module.exports.authorIsation = authorIsation
