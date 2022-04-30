@@ -30,8 +30,11 @@ const createBlog = async function (req, res) {
     let publishedAt=time.format('YYYY-mm-ddTHH:MM:ssZ')
     
     let isPublished=req.body.isPublished
-    console.log(isPublished)
+   // console.log(isPublished)
      var blogId=req.params.blogId
+     if(isDeleted===false){
+         i
+     }
      //console.log(blogId)
       let gotblog=await blogModel.findById(blogId)//Finding blogId in blogModel
      // console.log(gotblog)

@@ -31,7 +31,7 @@ const authorIsation = async function (req, res, next) {
         let blogId = req.params.blogId;
         
         let authorId = await blogModel.findOne({ _id: blogId }).select({ authorId: 1, _id: 0 })
-        console.log(authorId)
+       // console.log(authorId)
         let _id = authorId.authorId.toString()
         console.log(_id)
         let logId = decodedToken.authorId;
