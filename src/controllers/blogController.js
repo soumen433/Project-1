@@ -89,7 +89,7 @@ const getBlog = async function (req, res) {
         let data = req.query
 
         if (Object.keys(data).length === 0) {
-            let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false })
+            let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false})
             if (allBlogs.length == 0) return res.status(404).send({ status: false, msg: "not found" })
             return res.status(200).send({ status: true, msg: allBlogs })
         }
