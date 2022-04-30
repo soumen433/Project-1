@@ -12,7 +12,7 @@ const createAuthor = async function (req, res) {
             res.status(201).send({ msg: savedData })
         }
 
-        else res.status(400).send({ mag: " Data not Found" })
+        else res.status(400).send({ msg: " Data not Found" })
 
     }
     catch (error) {
