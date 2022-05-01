@@ -88,7 +88,7 @@ const deleteBlogsByFields = async function (req, res) {
 
 const getBlog = async function (req, res) {
     try{
-        let data = req.query
+        let data = req.query 
 
         if (Object.keys(data).length === 0) {
             let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false})
