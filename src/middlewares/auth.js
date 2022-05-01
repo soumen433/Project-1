@@ -13,7 +13,7 @@ const authEntication = async function (req, res, next) {
     }
     catch (error) {
 
-        return res.status(407).send({ msg: error.message })
+        return res.status(407).send({status:false, msg: error.message })
     }
 
 
@@ -23,13 +23,13 @@ const authEntication = async function (req, res, next) {
 
 const authorIsation = async function (req, res, next) {
     try {
+        let authorId;
         let header = req.headers;
         let token = header["x-api-key"]
         let decodedToken = jwt.verify(token, "group-25");
         let blogId = req.params.blogId;
 
         let data = req.query
-        let authorId;
         if (Object.keys(data).length === 0) {
             authorId = await blogModel.findOne({ _id: blogId }).select({ authorId: 1, _id: 0 })
         }
@@ -38,7 +38,7 @@ const authorIsation = async function (req, res, next) {
         }
         let _id = authorId.authorId.toString()
         let logId = decodedToken.authorId;
-        if (_id != logId) return res.status(401).send({ msg: "Sorry,authorisation required  " });
+        if (_id != logId) return res.status(401).send({status: false, msg: "Sorry,authorisation required  " });
 
 
         next()
@@ -47,7 +47,7 @@ const authorIsation = async function (req, res, next) {
 
 
     catch (error) {
-        return res.status(404).send({ msg: "not found" })
+        return res.status(404).send({status : false, msg : error.message })
     }
 
 
