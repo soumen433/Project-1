@@ -9,6 +9,10 @@ const createAuthor = async function (req, res) {
 
     try {
         let data = req.body
+        if (!data.fname) return res.status(400).send({ status: false, msg: "plz enter fname" })
+        if (!data.lname) return res.status(400).send({ status: false, msg: "plz enter lname" })
+        if (!data.password) return res.status(400).send({ status: false, msg: "plz enter password" })
+        if (!data.email) return res.status(400).send({ status: false, msg: "plz enter email" })
         if (!validateEmail(data.email)) return res.status(400).send({ status: false, msg: "plz enter valid email(like-aBcd123@gmail.com)" })
         if (Object.keys(data).length != 0) {
             let a = await AuthorModel.find({ email: data.email })
