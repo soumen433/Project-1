@@ -21,7 +21,7 @@ const createAuthor = async function (req, res) {
             res.status(201).send({ msg: savedData })
         }
 
-        else res.status(400).send({ mag: " body not Found" })
+        else res.status(400).send({ msg: " body not Found" })
 
     }
     catch (error) {
