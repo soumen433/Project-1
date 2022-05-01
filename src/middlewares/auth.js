@@ -2,6 +2,7 @@
 const jwt = require("jsonwebtoken");
 const blogModel = require("../models/blogModel");
 
+
 const authEntication = async function (req, res, next) {
     try {
         let header = req.headers;

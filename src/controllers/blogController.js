@@ -61,7 +61,8 @@ const deleteBlogs = async function (req, res) {
         let allBlogs = await BlogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true } }, { new: true })
         if (allBlogs) res.status(200).send({ status: true, msg: allBlogs })
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(400).send({ status: false, msg: err.message })
     }
 }
