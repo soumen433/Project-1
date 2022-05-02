@@ -37,7 +37,7 @@ const blogSchema = new mongoose.Schema({
         default: false
     },
 
-    deletedAt: String,
+    deletedAt: {type : String, default : ""},
 
 
 },
