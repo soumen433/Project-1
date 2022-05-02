@@ -10,21 +10,18 @@ const createBlog = async function (req, res) {
 
     try {
         let data = req.body
-        console.log(data)
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Body must require" })
         let validAuthor = await authorModel.findById({ _id: data.authorId })
 
         if (validAuthor === null) return res.status(400).send({ status: false, msg: "Author Id not valid" })
 
         if (data.isPublished == true) data.publishedAt = time
-        if (data.isDeleted == true) data.deletedAt = time
         let savedData = await blogModel.create(data)
         res.status(201).send({ status: true, data: savedData })
     }
 
 
     catch (error) {
-        console.log(error)
         res.status(400).send({ status: false, msg: error.message })
     }
 
@@ -66,10 +63,11 @@ const updateBlogs = async function (req, res) {
 const deleteBlogs = async function (req, res) {
     try {
         let id = req.params.blogId
-        let allBlogs = await blogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true, deletedAt: time } }, { new: true })
-        if (allBlogs) res.status(200).send({ status: true, msg: allBlogs })
+        let allBlogs = await blogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true, deletedAt: time } }, { new: true,upsert:true })
+        if (allBlogs) res.status(200).send({ status: true, data: allBlogs })
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(400).send({ status: false, msg: err.message })
     }
 }
@@ -81,8 +79,8 @@ const deleteBlogsByFields = async function (req, res) {
         data.isDeleted = false
         let any = await BlogModel.find(data)
         if (Object.keys(any).length !== 0) {
-            let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt: time} }, { new: true })
-            res.status(200).send({ status: true, msg: all })
+            let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt : time } }, { new: true,upsert:true })
+            res.status(200).send({ status: true, data: all })
         }
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
     } catch (err) {
@@ -95,11 +93,10 @@ const deleteBlogsByFields = async function (req, res) {
 const getBlog = async function (req, res) {
     try {
         let data = req.query
-        console.log(data)
         if (Object.keys(data).length === 0) {
             let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false })
             if (allBlogs.length == 0) return res.status(404).send({ status: false, msg: "not found" })
-            return res.status(200).send({ status: true, msg: allBlogs })
+            return res.status(200).send({ status: true, data: allBlogs })
         }
 
         let filterBlogs = await blogModel.find({ $and: [data, { isPublished: true }, { isDeleted: false }] })
@@ -107,7 +104,7 @@ const getBlog = async function (req, res) {
         if (filterBlogs.length === 0) return res.status(404).send({ status: false, msg: "data not found" })
 
 
-        res.status(200).send({ status: true, msg: filterBlogs })
+        res.status(200).send({ status: true, data: filterBlogs })
     }
     catch (error) {
         res.status(400).send({ status: false, msg: error.message })
