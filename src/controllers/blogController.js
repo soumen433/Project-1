@@ -64,7 +64,7 @@ const deleteBlogs = async function (req, res) {
     try {
         let id = req.params.blogId
         let allBlogs = await blogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true, deletedAt: time } }, { new: true,upsert:true })
-        if (allBlogs) res.status(200).send({ status: true, msg: allBlogs })
+        if (allBlogs) res.status(200).send({ status: true, data: allBlogs })
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
     } 
     catch (err) {
@@ -80,7 +80,7 @@ const deleteBlogsByFields = async function (req, res) {
         let any = await BlogModel.find(data)
         if (Object.keys(any).length !== 0) {
             let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt : time } }, { new: true,upsert:true })
-            res.status(200).send({ status: true, msg: all })
+            res.status(200).send({ status: true, data: all })
         }
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
     } catch (err) {
@@ -96,7 +96,7 @@ const getBlog = async function (req, res) {
         if (Object.keys(data).length === 0) {
             let allBlogs = await blogModel.find({ isPublished: true, isDeleted: false })
             if (allBlogs.length == 0) return res.status(404).send({ status: false, msg: "not found" })
-            return res.status(200).send({ status: true, msg: allBlogs })
+            return res.status(200).send({ status: true, data: allBlogs })
         }
 
         let filterBlogs = await blogModel.find({ $and: [data, { isPublished: true }, { isDeleted: false }] })
@@ -104,7 +104,7 @@ const getBlog = async function (req, res) {
         if (filterBlogs.length === 0) return res.status(404).send({ status: false, msg: "data not found" })
 
 
-        res.status(200).send({ status: true, msg: filterBlogs })
+        res.status(200).send({ status: true, data: filterBlogs })
     }
     catch (error) {
         res.status(400).send({ status: false, msg: error.message })

@@ -18,7 +18,7 @@ const createAuthor = async function (req, res) {
             let a = await AuthorModel.find({ email: data.email })
             if (a.length != 0) return res.status(400).send({ status: false, msg: "email already used" })
             let savedData = await AuthorModel.create(data)
-            res.status(201).send({status: true, msg: savedData })
+            res.status(201).send({status: true, data: savedData })
         }
 
         else res.status(400).send({status: false, msg: " body not Found" })
