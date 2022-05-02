@@ -81,7 +81,7 @@ const deleteBlogsByFields = async function (req, res) {
         data.isDeleted = false
         let any = await BlogModel.find(data)
         if (Object.keys(any).length !== 0) {
-            let all = await blogModel.updateMany(data, { $set: { isDeleted: true } }, { new: true })
+            let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt: time} }, { new: true })
             res.status(200).send({ status: true, msg: all })
         }
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
