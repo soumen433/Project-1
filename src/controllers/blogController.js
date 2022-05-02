@@ -63,7 +63,7 @@ const updateBlogs = async function (req, res) {
 const deleteBlogs = async function (req, res) {
     try {
         let id = req.params.blogId
-        let allBlogs = await blogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true, deletedAt: time } }, { new: true })
+        let allBlogs = await blogModel.findOneAndUpdate({ _id: id, isDeleted: false }, { $set: { isDeleted: true, deletedAt: time } }, { new: true,upsert:true })
         if (allBlogs) res.status(200).send({ status: true, msg: allBlogs })
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
     } 
@@ -79,7 +79,7 @@ const deleteBlogsByFields = async function (req, res) {
         data.isDeleted = false
         let any = await BlogModel.find(data)
         if (Object.keys(any).length !== 0) {
-            let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt : time } }, { new: true })
+            let all = await blogModel.updateMany(data, { $set: { isDeleted: true, deletedAt : time } }, { new: true,upsert:true })
             res.status(200).send({ status: true, msg: all })
         }
         else res.status(404).send({ status: false, msg: "No Blogs Exist" })
